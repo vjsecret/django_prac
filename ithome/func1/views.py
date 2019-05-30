@@ -64,3 +64,5 @@ def cama(request):
     #     break
     # cap.release()
     # cv2.destroyAllWindows()
+def pa_comic(request):
+    return render(request,'pa_comic.html')

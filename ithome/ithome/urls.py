@@ -30,6 +30,7 @@ urlpatterns = [
     path('listone', views.listone),
     path('hello_view', views.hello_view),
     path('print', views.printPage),
+	path('pa_comic', views.pa_comic),
     path('face/<int:kind>/', views.face),
 
     # path(r'^hello/', hello_view),

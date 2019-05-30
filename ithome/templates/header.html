@@ -1,0 +1,29 @@
+﻿<header>
+	<div class="row">
+        <div class="col-md-8">
+			開始
+            <ul class="nav nav-tabs navbar-fixed-top">
+			{% block header %}{% endblock %}
+              <li class="nav-item" id="btnLogout" style="display:none;">
+                <a class="nav-link">會員登出</a>
+              </li>
+             </ul>
+        </div>
+        <div class="col-md-4"> 
+        <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
+        <input type="password" id="txtPwd" placeholder="Enter Password"><br>
+        
+        <button class="btn btn-outline-success my-sm-0" id="btnLogin">
+        <a class="nav-link">會員登入</a></button>
+        <button class="btn btn-outline-success my-sm-0" id="liSignUp">
+        <a class="nav-link">註冊</a></button>
+        </div>                           
+
+        <!--<div class="col-md-4 pull-right">
+<form class="form-inline my-lg-0" action="http://www.google.com/search" method="get">
+          <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q">
+          <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
+        </form>
+        </div>-->
+	</div>
+</header>

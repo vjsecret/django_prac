@@ -18,6 +18,7 @@ from django.urls import path
 from func1 import views
 # from func1.views import hello_view
 # from func1.views import listone
+# from restaurants.views import menu, list_restaurants
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +32,10 @@ urlpatterns = [
     path('hello_view', views.hello_view),
     path('print', views.printPage),
 	path('pa_comic', views.pa_comic),
+	path('welcome', views.welcome),
+	path('menu', views.menu),
+	path('list_restaurants', views.list_restaurants),
+	path('comment', views.comment),
     path('face/<int:kind>/', views.face),
 
     # path(r'^hello/', hello_view),

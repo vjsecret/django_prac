@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django import template
 
-
 def index(request):
     return render(request,'index.html')
 
@@ -11,10 +10,8 @@ def member(request):
     
 def mycrud(request):
     return render(request,'mycrud.html')
-    
 # def login(request):
 #    return render(request,'login.html')
-     
 def car(request):
     return render(request,'car.html')
     
@@ -67,40 +64,40 @@ def cama(request):
     # cv2.destroyAllWindows()
 def pa_comic(request):
     return render(request,'pa_comic.html')
-def welcome(request):
-    if 'user_name' in request.GET:
-        return HttpResponse('Welcome!~'+request.GET['user_name'])
-    else:
-        return render_to_response('welcome.html',locals())
-def list_restaurants(request):
-    restaurants = Restaurant.objects.all()
-    return render_to_response('restaurants_list.html',locals())
-def menu(request):
-    if 'id' in request.GET:
-        print(type(request.GET['id']))
-        r = Restaurant.objects.get(id=request.GET['id'])
-        return render_to_response('menu.html',locals())
-    else:
-        return HttpResponseRedirect("/restaurants_list/")
-def comment(request,id):
-    if id:
-        r = Restaurant.objects.get(id=id)
-    else:
-        return HttpResponseRedirect("/restaurants_list/")
-    errors = []
-    if 'ok' in request.POST:
-        user = request.POST['user']
-        content = request.POST['content']
-        email = request.POST['email']
-        date_time = datetime.datetime.now()
-        if not user or not content or not email:
-            errors.append('* 有空白欄位，請不要留空')
-        if '@' not in email:
-            errors.append('*    email格式不正確，請重新輸入')
-        if not errors:
-            Comment.objects.create(user=user, email=email, content=content, 
-            date_time=date_time, restaurant=r)
-            user = ''
-            content = ''
-            email = ''
-    return render_to_response('comments.html',locals())
+# def welcome(request):
+#     if 'user_name' in request.GET:
+#         return HttpResponse('Welcome!~'+request.GET['user_name'])
+#     else:
+#         return render_to_response('welcome.html',locals())
+# def list_restaurants(request):
+#     restaurants = Restaurant.objects.all()
+#     return render_to_response('restaurants_list.html',locals())
+# def menu(request):
+#     if 'id' in request.GET:
+#         print(type(request.GET['id']))
+#         r = Restaurant.objects.get(id=request.GET['id'])
+#         return render_to_response('menu.html',locals())
+#     else:
+#         return HttpResponseRedirect("/restaurants_list/")
+# def comment(request,id):
+#     if id:
+#         r = Restaurant.objects.get(id=id)
+#     else:
+#         return HttpResponseRedirect("/restaurants_list/")
+#     errors = []
+#     if 'ok' in request.POST:
+#         user = request.POST['user']
+#         content = request.POST['content']
+#         email = request.POST['email']
+#         date_time = datetime.datetime.now()
+#         if not user or not content or not email:
+#             errors.append('* 有空白欄位，請不要留空')
+#         if '@' not in email:
+#             errors.append('*    email格式不正確，請重新輸入')
+#         if not errors:
+#             Comment.objects.create(user=user, email=email, content=content, 
+#             date_time=date_time, restaurant=r)
+#             user = ''
+#             content = ''
+#             email = ''
+#     return render_to_response('comments.html',locals())

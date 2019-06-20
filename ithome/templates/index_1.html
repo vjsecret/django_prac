@@ -17,27 +17,17 @@
 		.row{
 				flex-wrap: nowrap;
 			}
-	.footer{
-		background-color:#CCC;
-		color:#FFF;
-		position:fixed;
-		bottom:0px;
-		left:0px;	
-		font:12px;
-		width:100%;
-		text-align:center;
-		}
     </style>
   </head>
   <body>
     <!--<h1>Hello, world!</h1>-->
-	<div class="row">
-        <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-8 pull-left">
             <ul class="nav nav-tabs navbar-fixed-top">
               <li class="nav-item active">
                 <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
-        
+
               <li class="nav-item" id="mana" style="display:none;">
                 <a class="nav-link" href="mycrud">商品管理</a>
               </li> 
@@ -47,25 +37,26 @@
               <li class="nav-item" id="btnLogout" style="display:none;">
                 <a class="nav-link">會員登出</a>
               </li>
-             </ul>
+              <li> 
+              <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
+			  <input type="password" id="txtPwd" placeholder="Enter Password"><br>
+              </li>
+              <li class="nav-item" id="btnLogin">
+                <a class="nav-link">會員登入</a>
+              </li>              
+<!--			  <li class="nav-item" id="mana2">
+                <a class="nav-link" href="mycrud">商品管理</a>
+              </li>   -->              
+            </ul>
+ 
         </div>
-        <div class="col-md-4"> 
-        <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
-        <input type="password" id="txtPwd" placeholder="Enter Password"><br>
-        
-        <button class="btn btn-outline-success my-sm-0" id="btnLogin">
-        <a class="nav-link">會員登入</a></button>
-        <button class="btn btn-outline-success my-sm-0" id="liSignUp">
-        <a class="nav-link">註冊</a></button>
-        </div>                           
-
-        <!--<div class="col-md-4 pull-right">
+        <div class="col-md-4 pull-right">
 <form class="form-inline my-lg-0" action="http://www.google.com/search" method="get">
           <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q">
           <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
         </form>
-        </div>-->
-	</div>
+        </div>
+    </div>
 
 <div class="bd-example">
   <div id="mycarousel" class="carousel slide" data-ride="carousel">
@@ -142,9 +133,76 @@
 </div>
         <div class="col-sm-8"><img src="..\static\images\coffee\coffee04.jpg" class="d-block w-100" alt="..."></div>
 </main>
-<div class="footer" id="footer">版權所有，翻拷必究</footer>
 
 	<script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
-    <script src="static\js\index.js"></script>
+    <script>
+      // Initialize Firebase
+        var config = {
+                apiKey: "AIzaSyBBpKMDQk2He3D3uPVrypr0namRTJes2pk",
+                authDomain: "first20190109.firebaseapp.com",
+                databaseURL: "https://first20190109.firebaseio.com",
+                projectId: "first20190109",
+                storageBucket: "first20190109.appspot.com",
+                messagingSenderId: "1026634990833"
+              };
+              firebase.initializeApp(config);
+		const txtEmail=document.getElementById('txtEmail');
+		const txtPwd=document.getElementById('txtPwd');
+		const btnLogin=document.getElementById('btnLogin');
+        const liMana=document.getElementById('mana');
+        const auth=firebase.auth();
+
+		btnLogin.addEventListener('click',e=>{
+								var email=txtEmail.value;
+								var pwd=txtPwd.value;							
+								var promise=auth.signInWithEmailAndPassword(email, pwd);
+		
+								promise.then(function(){
+										alert("歡迎光臨!!");
+										//authDemo.innerHTML="電子郵件:"+email+"<br>";
+									});
+								promise.catch(error=>{
+											  if (error.code==="auth/invalid-email")
+												alert("電子郵件格式不正確!!");
+											else if (error.code==="auth/user-not-found")
+												alert("無此使用者!!");
+											else if (error.code==="auth/wrong-password")
+												alert("密碼錯誤!!");
+											else
+												alert("登入失敗，可能被停權了，請主動與MIS人員聯絡!!");
+												//authDemo.innerHTML="登入失敗訊息:"+error.message+"<br>";
+									});
+		
+		});
+		
+		
+
+        btnLogout.addEventListener('click',e=>{							
+                auth.signOut();
+                alert("881~~");
+				txtEmail.value='';
+				txtPwd.value='';
+				//javascript:location.href='login2';
+            });
+        
+        auth.onAuthStateChanged(firebaseUser=>{
+                                  if(firebaseUser){
+                    console.log(firebaseUser);
+                    btnLogout.style.display="inline-block";
+                    liMana.style.display="inline-block";
+					txtEmail.style.display="none";
+					txtPwd.style.display="none";
+					btnLogin.style.display="none";
+                    //liSignUp.style.display="none";                    
+                    }else{
+                    btnLogout.style.display="none";
+                    liMana.style.display="none";
+					txtEmail.style.display="inline-block";
+					txtPwd.style.display="inline-block";
+					btnLogin.style.display="inline-block";
+                    //liSignUp.style.display="inline-block";
+                }
+        });
+    </script>
   </body>
 </html>

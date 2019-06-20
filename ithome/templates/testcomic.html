@@ -1,0 +1,50 @@
+﻿{% extends 'model_index1.html' %}
+{% block title %} 漫畫 {% endblock%}
+{% block content %}
+	<!-- Required script tags for Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<!-- Sidenav Scripts-->
+	<script src="static\js\sidenav.js"></script>
+{% endblock %}
+{% extends 'header.html' %}
+{% block header %}
+            <ul class="navbar-nav mr-auto"><!--<ul class="nav nav-tabs navbar-fixed-top">-->
+              <li class="nav-item">
+                <a class="nav-link" href="index">
+                        &nbsp;<i class="fas fa-github"></i>Home</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link active" href="#">
+                        &nbsp;<i class="fas fa-github"></i>漫畫</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link active" href="pa_article">
+                        &nbsp;<i class="fas fa-github"></i>文章</a>
+              </li>
+              <li class="nav-item" id="mana" style="display:none;">
+                <a class="nav-link" href="mycrud">
+                        &nbsp;<i class="fas fa-github"></i>商品管理</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="car">
+                        &nbsp;<i class="fas fa-github"></i>購物車</a>
+              </li>
+              <li class="nav-item" id="btnLogout" style="display:none;">
+                <a class="nav-link">&nbsp;<i class="fas fa-github"></i>會員登出</a>
+              </li>
+			  			<li></li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+					<button class="btn btn-outline-success my-sm-0" id="btnLogin">
+                    <a class="nav-link">
+                        &nbsp;<i class="fas fa-sign-in-alt">會員登入</a></button>
+                </li>
+                <li class="nav-item">
+					<button class="btn btn-outline-success my-sm-0" id="liSignUp">
+					<a class="nav-link">
+											&nbsp;<i class="fas fa-sign-in-alt">註冊</a></button>
+                </li>
+            </ul>
+{% endblock %}

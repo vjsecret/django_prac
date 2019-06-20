@@ -1,15 +1,8 @@
 ﻿{% extends 'model_index1.html' %}
-{% block title %} 漫畫 {% endblock%}
+{% block title %} manager {% endblock%}
 {% block header %}
 <header>
     <nav class="navbar navbar-expand-md fixed-top font-weight-bold">
-        <a class="navbar-brand nav-link p-2" href="#">
-            Bootstrap SideNav
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
 		<div class="collapse navbar-collapse" id="navbarContent"><!--<div class="row">-->
         <!--<div class="col-md-8">-->
             <ul class="navbar-nav mr-auto"><!--<ul class="nav nav-tabs navbar-fixed-top">-->
@@ -17,12 +10,12 @@
                 <a class="nav-link" href="/index">
                         &nbsp;<i class="fas fa-github"></i>Home</span></a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link active" href="#">
+              <li class="nav-item">
+                <a class="nav-link" href="/comic">
                         &nbsp;<i class="fas fa-github"></i>漫畫</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link active" href="/pa_article">
+              <li class="nav-item">
+                <a class="nav-link" href="/article">
                         &nbsp;<i class="fas fa-github"></i>文章</a>
               </li>
               <li class="nav-item" id="mana" style="display:none;">
@@ -32,6 +25,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="/car">
                         &nbsp;<i class="fas fa-github"></i>購物車</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link active" href="#">
+                        &nbsp;<i class="fas fa-github"></i>member</a>
               </li>
               <li class="nav-item" id="btnLogout" style="display:none;">
                 <a class="nav-link">&nbsp;<i class="fas fa-github"></i>會員登出</a>
@@ -72,13 +69,46 @@
         </div>-->
 		</div>
 	</nav>
-	<nav class="sidenav"></nav>
+	<nav class="sidenav">
+		<div class="collapse navbar-collapse" id="navbarContent">
+			<ul class="navbar-nav mr-auto">
+			  <li class="nav-item active">
+				<a class="nav-link active" href="/member/info">
+						&nbsp;<i class="fas fa-github"></i>資料</a>
+			  </li>
+			  <li class="nav-item active">
+				<a class="nav-link active" href="/member/manager/article">
+						&nbsp;<i class="fas fa-github"></i>文章</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="/member/manager/comic">
+						&nbsp;<i class="fas fa-github"></i>漫畫</a>
+			  </li>
+			  <li class="nav-item" id="mana">
+				<a class="nav-link" href="/member/manager/store">
+						&nbsp;<i class="fas fa-github"></i>商品管理</a>
+			  </li> 
+			  <li class="nav-item">
+				<a class="nav-link" href="/member/manager/class">
+						&nbsp;<i class="fas fa-github"></i>類別</a>
+			  </li>
+			</ul>
+		</div>
+	</nav>
 </header>
 {% endblock%}
 {% block content %}
-  <main class="bg-fullscreen">
-  <div class="overlay">
-    <div class="overlay-title">Responsive Navbar with Collapsing Sidenav</div>
-  </div>
-  </main>   
+{% if list %}
+	{% for infolist in list %}
+		  <div>
+		  <a href="/comic/info/{{infolist.id}}">{{infolist.title}}</a><BR>
+		  <img src="/static/images/face{{infolist.photoid}}.jpg"><BR>
+		  {{infolist.content}}<BR>
+		  </div>
+	{% endfor %}
+{% else %}
+	<p>沒有任何manager</p>
+{% endif %}
+
 {% endblock %}
+  

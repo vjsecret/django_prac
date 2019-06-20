@@ -1,5 +1,5 @@
 ﻿{% extends 'model_index1.html' %}
-{% block title %} 漫畫 {% endblock%}
+{% block title %} 文章 {% endblock%}
 {% block header %}
 <header>
     <nav class="navbar navbar-expand-md fixed-top font-weight-bold">
@@ -17,12 +17,12 @@
                 <a class="nav-link" href="/index">
                         &nbsp;<i class="fas fa-github"></i>Home</span></a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link active" href="#">
+              <li class="nav-item">
+                <a class="nav-link" href="/comic">
                         &nbsp;<i class="fas fa-github"></i>漫畫</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link active" href="/pa_article">
+                <a class="nav-link active" href="#">
                         &nbsp;<i class="fas fa-github"></i>文章</a>
               </li>
               <li class="nav-item" id="mana" style="display:none;">
@@ -32,6 +32,10 @@
               <li class="nav-item">
                 <a class="nav-link" href="/car">
                         &nbsp;<i class="fas fa-github"></i>購物車</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/member/info">
+                        &nbsp;<i class="fas fa-github"></i>member</a>
               </li>
               <li class="nav-item" id="btnLogout" style="display:none;">
                 <a class="nav-link">&nbsp;<i class="fas fa-github"></i>會員登出</a>
@@ -76,9 +80,19 @@
 </header>
 {% endblock%}
 {% block content %}
-  <main class="bg-fullscreen">
-  <div class="overlay">
-    <div class="overlay-title">Responsive Navbar with Collapsing Sidenav</div>
-  </div>
-  </main>   
+{% if list %}
+<div id="content" class="col-12 col-m-12">
+	{% for infolist in list %}
+		  <div class="card" style="width: 100%;">		    
+			<img src="/static/images/face{{infolist.photoid}}.jpg" class="card-img-top" alt="...">
+			<div class="card-body">
+				<a href="/comic/info/{{infolist.id}}">{{infolist.title}}</a>
+				<p class="card-text">{{infolist.content}}</p>
+			</div>
+		  </div>
+	{% endfor %}
+</div>
+{% else %}
+	<p>沒有任何文章</p>
+{% endif %}  
 {% endblock %}

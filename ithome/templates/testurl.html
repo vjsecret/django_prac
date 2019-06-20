@@ -3,13 +3,6 @@
 {% block header %}
 <header>
     <nav class="navbar navbar-expand-md fixed-top font-weight-bold">
-        <a class="navbar-brand nav-link p-2" href="#">
-            Bootstrap SideNav
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
 		<div class="collapse navbar-collapse" id="navbarContent"><!--<div class="row">-->
         <!--<div class="col-md-8">-->
             <ul class="navbar-nav mr-auto"><!--<ul class="nav nav-tabs navbar-fixed-top">-->
@@ -21,8 +14,8 @@
                 <a class="nav-link active" href="#">
                         &nbsp;<i class="fas fa-github"></i>漫畫</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link active" href="/pa_article">
+              <li class="nav-item">
+                <a class="nav-link" href="/article">
                         &nbsp;<i class="fas fa-github"></i>文章</a>
               </li>
               <li class="nav-item" id="mana" style="display:none;">
@@ -76,9 +69,18 @@
 </header>
 {% endblock%}
 {% block content %}
-  <main class="bg-fullscreen">
-  <div class="overlay">
-    <div class="overlay-title">Responsive Navbar with Collapsing Sidenav</div>
-  </div>
-  </main>   
+{{attr}}<BR>
+{% if list %}
+	{% for infolist in list %}
+		  <div>
+		  <a href="/comic/info/{{infolist.id}}">{{infolist.title}}</a><BR>
+		  <img src="/static/images/face{{infolist.photoid}}.jpg"><BR>
+		  {{infolist.content}}<BR>
+		  </div>
+	{% endfor %}
+{% else %}
+	<p>沒有任何漫畫</p>
+{% endif %}
+
 {% endblock %}
+  

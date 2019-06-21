@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django import template
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
 import pymysql
 import datetime
 
@@ -28,11 +32,14 @@ def index(request):
 
 # def member(request):
 #     return render(request,'member.html')
+@login_required
 def member(request,attr):
     if attr== "info":
         return render(request,'member.html')
     if attr== "manager":
         return render(request,'manager.html')
+
+@login_required
 def manager(request,attr):
     if attr== "info":
         return render(request,'member.html')
@@ -40,13 +47,38 @@ def manager(request,attr):
     #if attr== "manager":
         return render(request,'manager.html')
 
+@login_required
 def mycrud(request):
     return render(request,'mycrud.html')
-def login(request):
-   return render(request,'login.html')
+
+# def login(request):
+#    return render(request,'login.html')
+def logout_view(request):
+    logout(request)
+    #return redirect(request,'index.html')
+    #return HttpResponse(reverse('index'))
+    return render(request,'index.html')
+def register(request):
+    """Register a new user."""
+    if request.method != 'POST':
+        form = UserCreationForm()
+    else:
+        form = UserCreationForm(data=request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            authenticated_user = auth.authenticate(username=new_user.username, password=request.POST['password1'])
+            # auth.login(request, authenticated_user) #進行登入
+            #return HttpResponseRedirect(reverse('learning_logs:index'))
+            return render(request,'index.html')
+
+    context = {'form': form}
+    return render(request, 'register.html', context)
+
+@login_required
 def car(request):
     return render(request,'car.html')
-    
+
+@login_required
 def testindex(request):
     print(type(request.user))
     #print(request.user.is_authenticated())

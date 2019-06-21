@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView
 from func1 import views
 # from func1.views import hello_view
 # from func1.views import listone
@@ -23,11 +24,13 @@ from func1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.testindex),
-    path('index', views.index),
+    path('index', LoginView.as_view(template_name='index.html'), name="index"),
     path('member/<attr>/', views.member),
     path('member/manager/<attr>/', views.manager),
     path('mycrud', views.mycrud),
-    path('login', views.login),
+    path('login', LoginView.as_view(template_name='login.html'), name="login"),
+    path('logout/', views.logout_view, name='logout'),
+    path('register/', views.register, name='register'),
     path('car', views.car),
     path('listone', views.listone),
     path('hello_view', views.hello_view),

@@ -1,0 +1,14 @@
+﻿{% extends 'model_index1.html' %}
+{% block title %} Login {% endblock%}
+
+{% block content %}
+  <form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+      <div class="col-md-4">  
+		<button class="btn btn-outline-success my-sm-0" id="liSignUp" name="submit">
+		<a class="nav-link">註冊</a></button>
+		<input type="hidden" name="next" value="{% url 'index' %}" />
+	  </div>
+  </form>
+{% endblock content %}

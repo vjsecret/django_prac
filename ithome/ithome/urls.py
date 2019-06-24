@@ -39,8 +39,8 @@ urlpatterns = [
     path('listone', views.listone),
     path('hello_view', views.hello_view),
     path('print', views.printPage),
-    path('pa_comic', views.pa_comic),
-    path('pa_comic/<data>/', views.comic),#無法與上面同時存在
+    path('pa_comic/', views.pa_comic),
+    path('pa_comic/<data>/', views.pa_comic),#無法與上面同時存在
     path('pa_article', views.pa_article),
     #path('welcome', views.welcome),
     #path('menu', views.menu),

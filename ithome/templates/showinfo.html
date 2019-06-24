@@ -1,5 +1,5 @@
 ﻿{% extends 'model_index1.html' %}
-{% block title %} Hello, world! {% endblock%}
+{% block title %} 店家 {% endblock%}
 {% block header %}
 <header>
 <div class="container">
@@ -106,12 +106,23 @@
 </header>
 {% endblock%}
 {% block content %}
+{{abc}}
 {% if list %}
 <div id="content" class="col-12 col-m-12">
+	{% for infolist in list %}
+		  <div class="card" style="width: 100%;">
+			<img src="/static/images/face{{infolist.photoid}}.jpg" class="card-img-top" alt="...">
+			<div class="card-body">
+			  <a href="/comic/info/{{infolist.id}}">{{infolist.title}}</a>
+              <h5 class="card-title">{{infolist.title}}</h5>
+              <p class="card-text">{{infolist.content}}</p>
+			</div>
+		  </div>
+	{% endfor %}
 </div>
-{% else %}	
-	<a class="nav-link active" href="/showinfo/stores">&nbsp;<i class="fas fa-github"></i>請選擇預購物品</a>
-{% endif %}  
+{% else %}
+	<p>請新增資料</p>
+{% endif %}
+ 
 {% endblock %}
-{% block script] %}
-{% endblock %}
+  

@@ -13,12 +13,6 @@ def selecAttr(str):
     Now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     #str(Now)
     if str== "comic":
-        db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
-        cursor = db.cursor()
-        # 按字典返回 
-        # cursor = db.cursor(pymysql.cursors.DictCursor)
-        getlist("comic")
-        db.close()
         food1 = { 'id':1,'title':'漫畫一', 'photoid':3, 'content':'漫畫一好吃'}
         food2 = { 'id':2,'title':'漫畫一蒜泥白肉', 'photoid':4, 'content':'漫畫一人氣推薦'}
         return [food1,food2]
@@ -26,6 +20,59 @@ def selecAttr(str):
         food1 = { 'id':1,'title':'文章一', 'photoid':3, 'content':'文章一好吃'}
         food2 = { 'id':2,'title':'文章一蒜泥白肉', 'photoid':4, 'content':'文章一人氣推薦'}
         return [food1,food2]    
+
+def getlist(str, cursor):
+    #print(str)
+    if str== "comic":
+        # Prepare SQL query to select a record from the table.
+        sql = "SELECT * FROM CLIST"
+        #\
+        #    WHERE INCOME > %d" % (1000)
+        #print (sql)
+        try:
+            # Execute the SQL command
+            cursor.execute(sql)
+            # Fetch all the rows in a list of lists.
+            results = cursor.fetchall()
+            data={}
+            list=[]
+            for row in results:
+                #print (row)
+                id = row[0]
+                title = row[1]
+                content = row[2]
+                photoid = row[3]
+                # Now print fetched result
+                #print ("id = %s, title = %s, content = %s, photoid = %s" % (id, title, content, photoid ))
+                #data.update({"id":row[0], "title":row[1], "content":row[2], "photoid":row[3]})
+                #data.setdefault(zip(['id', 'title', 'content', 'photoid'], row))
+                data={"id":row[0], "title":row[1], "content":row[2], "photoid":row[3]}
+                list.append(data)
+            # print(data)
+            # print(list)
+            return list
+        except:
+            import traceback
+            traceback.print_exc()
+            print ("Error: unable to fetch data")
+    if str== "article":
+        try:
+            food1 = { 'id':1,'title':'文章一', 'photoid':3, 'content':'文章一好吃'}
+            food2 = { 'id':2,'title':'文章一蒜泥白肉', 'photoid':4, 'content':'文章一人氣推薦'}
+            return [food1,food2]
+        except:
+            import traceback
+            traceback.print_exc()
+            print ("Error: unable to fetch data")
+    if str== "store":
+        try:
+            food1 = { 'id':1,'title':'文章一', 'photoid':3, 'content':'文章一好吃'}
+            food2 = { 'id':2,'title':'文章一蒜泥白肉', 'photoid':4, 'content':'文章一人氣推薦'}
+            return [food1,food2]
+        except:
+            import traceback
+            traceback.print_exc()
+            print ("Error: unable to fetch data")
 
 def index(request):
     return render(request,'index.html')
@@ -39,18 +86,6 @@ def member(request,attr):
     if attr== "manager":
         return render(request,'manager.html')
 
-@login_required
-def manager(request,attr):
-    if attr== "info":
-        return render(request,'member.html')
-    else:
-    #if attr== "manager":
-        return render(request,'manager.html')
-
-@login_required
-def mycrud(request):
-    return render(request,'mycrud.html')
-
 # def login(request):
 #    return render(request,'login.html')
 def logout_view(request):
@@ -58,6 +93,7 @@ def logout_view(request):
     #return redirect(request,'index.html')
     #return HttpResponse(reverse('index'))
     return render(request,'index.html')
+
 def register(request):
     """Register a new user."""
     if request.method != 'POST':
@@ -74,9 +110,55 @@ def register(request):
     context = {'form': form}
     return render(request, 'register.html', context)
 
+def showinfo(request, attr):
+    if str== "comic":
+        db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+    else:
+        db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
+    cursor = db.cursor()
+    # 按字典返回 
+    # cursor = db.cursor(pymysql.cursors.DictCursor)
+    list=getlist(attr, cursor)
+
+    db.close()
+    return render(request,'showinfo.html',locals())
+
 @login_required
 def car(request):
     return render(request,'car.html')
+
+def comic(request):
+    list = selecAttr("comic")
+    # food1 = { 'id':1,'title':'漫畫一', 'photoid':3, 'content':'好吃'}
+    # food2 = { 'id':2,'title':'蒜泥白肉', 'photoid':4, 'content':'人氣推薦'}
+    # comiclist = [food1,food2]
+    return render(request,'comic.html',locals())
+
+# def comic(request, data):
+#     print(data)
+#     print(type(data))
+#     #list = selecAttr(attr)
+#     # food1 = { 'id':1,'title':'漫畫一', 'photoid':3, 'content':'好吃'}
+#     # food2 = { 'id':2,'title':'蒜泥白肉', 'photoid':4, 'content':'人氣推薦'}
+#     # comiclist = [food1,food2]
+#     # return redirect
+#     return render(request,'comic.html',{'abc': "Hello Django "},{locals() } )
+
+def article(request):
+    list = selecAttr("article")
+    return render(request,'article.html',locals())
+
+@login_required
+def manager(request,attr):
+    if attr== "info":
+        return render(request,'member.html')
+    else:
+    #if attr== "manager":
+        return render(request,'manager.html')
+
+@login_required
+def mycrud(request):
+    return render(request,'mycrud.html')
 
 @login_required
 def testindex(request):
@@ -212,52 +294,6 @@ def pa_article(request):
     print('Yes, Insert Successfull.')
     db.close()
     return render(request,'pa_article.html')
-def getlist(str):
-    if str== "comic":
-        # Prepare SQL query to select a record from the table.
-        sql = "SELECT * FROM CLIST"
-        #\
-        #    WHERE INCOME > %d" % (1000)
-        #print (sql)
-        try:
-            # Execute the SQL command
-            cursor.execute(sql)
-            # Fetch all the rows in a list of lists.
-            results = cursor.fetchall()
-            for row in results:
-                #print (row)
-                id = row[0]
-                title = row[1]
-                content = row[2]
-                photoid = row[3]
-                # Now print fetched result
-                print ("id = %s, title = %s, content = %s, photoid = %s" % \
-                        (id, title, content, photoid ))
-        except:
-            import traceback
-            traceback.print_exc()
-            print ("Error: unable to fetch data")
-
-def comic(request):
-    list = selecAttr("comic")
-    # food1 = { 'id':1,'title':'漫畫一', 'photoid':3, 'content':'好吃'}
-    # food2 = { 'id':2,'title':'蒜泥白肉', 'photoid':4, 'content':'人氣推薦'}
-    # comiclist = [food1,food2]
-    return render(request,'comic.html',locals())
-
-def comic(request, data):
-    print(data)
-    print(type(data))
-    #list = selecAttr(attr)
-    # food1 = { 'id':1,'title':'漫畫一', 'photoid':3, 'content':'好吃'}
-    # food2 = { 'id':2,'title':'蒜泥白肉', 'photoid':4, 'content':'人氣推薦'}
-    # comiclist = [food1,food2]
-    # return redirect
-    return render(request,'comic.html',{'abc': "Hello Django "},{locals() } )
-
-def article(request):
-    list = selecAttr("article")
-    return render(request,'article.html',locals())
 
 def testurl(request, attr):
     #article(request)

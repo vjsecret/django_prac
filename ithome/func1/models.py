@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib import admin
+from django.contrib.auth.models import User
 
 # class Item(models.Model):
 #     stock = models.IntegerField(default=0)
@@ -33,10 +35,10 @@ class Profile(models.Model):
         db_table = "profile"
 
 
-class User(models.Model):
-    username = models.CharField(max_length = 30)
-    def __unicode__(self):
-        return self.username
+# class User(models.Model):
+#     username = models.CharField(max_length = 30)
+#     def __unicode__(self):
+#         return self.username
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=20)
@@ -55,3 +57,35 @@ class Food(models.Model):
 
     class Meta(object):
         db_table = "food"
+
+class Category(models.Model):
+    name = models.CharField(max_length=20,verbose_name='文章類別')
+    number = models.IntegerField(default=1,verbose_name='分類數目')
+    class Meta(object):
+        db_table = "category"
+
+class Topic(models.Model):
+    text=models.CharField(max_length=100)
+    date_added=models.DateTimeField(auto_now_add=True)
+    owner=models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.text # 返回儲存在text屬性中的字串
+
+class Entry(models.Model):
+    topic = models.ForeignKey(Topic,on_delete=models.CASCADE)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = 'entries'
+ 
+    def __str__(self):
+        return self.text
+
+admin.site.register(Music)
+admin.site.register(Restaurant)
+admin.site.register(Food)
+admin.site.register(Category)
+admin.site.register(Topic)
+admin.site.register(Entry)

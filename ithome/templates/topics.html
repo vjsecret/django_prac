@@ -106,38 +106,17 @@
 </header>
 {% endblock%}
 {% block content %}
-{{abc}}
-{% if list %}
-<div id="content" class="col-12 col-m-12">
-	{% for infolist in list %}
-		  <div class="card" style="width: 100%;">
-			<img src="/static/images/face{{infolist.photoid}}.jpg" class="card-img-top" alt="...">
-			<div class="card-body">
-			  <a href="/comic/info/{{infolist.id}}" >{{infolist.title}}</a>
-              <h5 class="card-title" id="title">{{infolist.title}}</h5>
-			  {% if infolist.content %}
-              <p class="card-text" id="content">{{infolist.content}}</p>
-			  {% endif %}
-			  {% if infolist.price %}
-			  <p class="card-text">價格:<span id="price">{{infolist.price}}</span></p>
-			  <form action="/showinfo/article/" method="POST" name="form">
-			  {% csrf_token %}
-			  <input type="hidden" name="title" value="酸菜"></input>
-			  <input type="hidden" name="price" value="180"></input>
-			  <button class="btn btn-outline-success my-sm-0" id="addCar1" name="submit">加入購物車</button>
-			  </form>
-			  {% endif %}			  
-			</div>
-		  </div>
-	{% endfor %}
-
+<div id="test1"> 
+  <p>Topics</p>
+  <ul>
+    {% for topic in topics %}
+      <li>
+        <a href="{% url 'topic' topic.id %}">{{ topic }}</a>
+	  </li>
+    {% empty %}
+      <li>No topics have been added yet.</li>
+    {% endfor %}
+  </ul>
+	  <a href="{% url 'new_topic' %}">Add new topic</a>
 </div>
-{% else %}
-	<p>請新增資料</p>
-{% endif %}
- 
 {% endblock %}
-{% block script] %}	
-    <script src="..\..\static\js\showinfo.js"></script>
-{% endblock %}
-  

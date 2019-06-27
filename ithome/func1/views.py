@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, Http404
 from django import template
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
+from func1.models import Topic, Entry
+from func1.forms import TopicForm,EntryForm
 import pymysql
 import datetime
 
@@ -56,10 +58,28 @@ def getlist(str, cursor):
             traceback.print_exc()
             print ("Error: unable to fetch data")
     if str== "article":
+        sql = "SELECT * FROM ALIST"
+        #\
+        #    WHERE INCOME > %d" % (1000)
+        #print (sql)
         try:
-            food1 = { 'id':1,'title':'文章一', 'photoid':3, 'content':'文章一好吃'}
-            food2 = { 'id':2,'title':'文章一蒜泥白肉', 'photoid':4, 'content':'文章一人氣推薦'}
-            return [food1,food2]
+            # Execute the SQL command
+            cursor.execute(sql)
+            # Fetch all the rows in a list of lists.
+            results = cursor.fetchall()
+            data={}
+            list=[]
+            for row in results:
+                #print (row)
+                id = row[0]
+                title = row[1]
+                photoid = row[2]
+                price = row[3]
+                # Now print fetched result
+                #print ("id = %s, title = %s, photoid = %d, price = %d" % (id, title, photoid, price ))
+                data={"id":row[0], "title":row[1], "photoid":row[2], "price":row[3]}
+                list.append(data)
+            return list
         except:
             import traceback
             traceback.print_exc()
@@ -111,21 +131,68 @@ def register(request):
     return render(request, 'register.html', context)
 
 def showinfo(request, attr):
-    if str== "comic":
-        db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
-    else:
-        db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
+    db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+    # if str== "comic":
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+    # else:
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
     cursor = db.cursor()
     # 按字典返回 
     # cursor = db.cursor(pymysql.cursors.DictCursor)
     list=getlist(attr, cursor)
 
     db.close()
+    if request.method == 'POST':
+        print("==========fred: showinfo post=============")
+        print(request.path)
+        print(request.path_info)
+        print(request.content_params)
+        print(request.POST)
+        result_list = request.POST.getlist('price', '')
+        print(result_list)
+        result = str(result_list)
+
+        # form = TopicForm(request.POST)
+        # if form.is_valid():
+        #     new_topic = form.save(commit=False) # 新增區塊
+        #     new_topic.owner = request.user # 新增區塊
+        #     new_topic.save() # 新增區塊
+        # context = {'form': form}
+        #return JsonResponse(list)
+    #if request.method!="POST":
+    else:
+        print("==========fred: showinfo get=============")
+        form = TopicForm()
     return render(request,'showinfo.html',locals())
 
 @login_required
 def car(request):
-    return render(request,'car.html')
+    print("==========fred=============")
+    print(request)
+    #print(request.headers)
+    COOKIES=request.COOKIES
+    get_host=request.get_host
+    owner=request.user
+    scheme=request.scheme
+    method=request.method
+    post=request.POST
+    path=request.path
+    path_info=request.path_info
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    context = {'topics': topics}
+    return render(request,'car.html',locals())
+
+@login_required
+def mycrud(request):
+    return render(request,'mycrud.html')
+
+@login_required
+def manager(request,attr):
+    if attr== "info":
+        return render(request,'member.html')
+    else:
+    #if attr== "manager":
+        return render(request,'manager.html')
 
 def comic(request):
     list = selecAttr("comic")
@@ -148,69 +215,6 @@ def article(request):
     list = selecAttr("article")
     return render(request,'article.html',locals())
 
-@login_required
-def manager(request,attr):
-    if attr== "info":
-        return render(request,'member.html')
-    else:
-    #if attr== "manager":
-        return render(request,'manager.html')
-
-@login_required
-def mycrud(request):
-    return render(request,'mycrud.html')
-
-@login_required
-def testindex(request):
-    print(type(request.user))
-    #print(request.user.is_authenticated())
-    #return HttpResponse('歡迎光臨我的網站')
-    return render(request,'testindex.html')
-
-# Create your views here.
-def listone(request):
-    print("hello web")
-    return render(request,'basic.html',locals())
-    #return HttpResponse("hello world")
-
-# Create your views here.
-def hello_view(request):
-    return render(request, 'hello_django.html', {
-        'data': "Hello Django ",
-    })
-
-
-def face(request, kind):
-    print(type(kind))
-    return render(request,'face.html', {'kind':kind})
-
-def printPage(request):
-    # with open('templates/print.html','r',encoding="utf-8") as reader:
-    #         t = template.Template(reader.read())
-    #         c = template.Context({ 'name':'s1', 'price':60, 'comment':'deli', 'is_spicy':False })
-    #         return HttpResponse(t.render(c))
-
-    food1 = { 'name':'番茄炒蛋', 'price':60, 'comment':'好吃', 'is_spicy':False }
-    food2 = { 'name':'蒜泥白肉', 'price':100, 'comment':'人氣推薦', 'is_spicy':True }
-    foods = [food1,food2]
-    # return render_to_response('print.html',locals())
-    return render(request,'print.html',locals())
-
-def cama(request):
-    image = cv2.imread('..\static\images\Desert.jpg',1)
-    # cv2.imshow("demo", image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-
-    # cap = cv2.VideoCapture(0)
-    # while(True):
-    #     ret , frame = cap.read()
-    #     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-    #     cv2.imshow('frame',gray)
-    #     if cv2.waitKey(1) & 0xFF ==ord('q'):
-    #     break
-    # cap.release()
-    # cv2.destroyAllWindows()
 def pa_comic(request):
     db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
 
@@ -248,60 +252,177 @@ def pa_comic(request):
     print('Yes, Insert Successfull.')
     db.close()
     return render(request,'pa_comic.html')
+
 def pa_article(request):
-    db = pymysql.connect(host="localhost", user="test1", password="123", db="test")
+    db = pymysql.connect(host="localhost", user="test1", password="123", db="article")
 
     cursor = db.cursor()
-    cursor.execute("DROP TABLE IF EXISTS employee")
+    cursor.execute("DROP TABLE IF EXISTS aList")
     # Create table as per requirement
-    sql = """CREATE TABLE `employee` (
-    `id` int(10) NOT NULL AUTO_INCREMENT,
-    `first_name` char(20) NOT NULL,
-    `last_name` char(20) DEFAULT NULL,
-    `age` int(11) DEFAULT NULL,
-    `sex` char(1) DEFAULT NULL,
-    `income` float DEFAULT NULL,
-    PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
+    sql = """CREATE TABLE `aList` (
+    `id` int(10) DEFAULT NULL,
+    `title` char(20) NOT NULL,
+    `photoid` int(11) DEFAULT NULL,
+    `price` int(10) DEFAULT NULL
+    )"""
+
     cursor.execute(sql)
     print("Created table Successfull.")
-    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-    LAST_NAME, AGE, SEX, INCOME)
-    VALUES ('Mac', 'Su', 20, 'M', 5000)"""
+
+    sql = """INSERT INTO aList(ID, TITLE, PHOTOID, PRICE)
+    VALUES (1,'番茄炒蛋', 3, 60)"""
     try:
-        # Execute the SQL command
         cursor.execute(sql)
-        # Commit your changes in the database
         db.commit()
     except:
-        # Rollback in case there is any error
         db.rollback()
     
     # 再次插入一条记录
-    # Prepare SQL query to INSERT a record into the database.
-    sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-    LAST_NAME, AGE, SEX, INCOME)
-    VALUES ('Kobe', 'Bryant', 40, 'M', 8000)"""
+    sql = """INSERT INTO aList(ID, TITLE, PHOTOID, PRICE)
+    VALUES (2,'蒜泥白肉', 4, 150)"""
     try:
-        # Execute the SQL command
         cursor.execute(sql)
-        # Commit your changes in the database
         db.commit()
     except:
-        # Rollback in case there is any error
         db.rollback()
     #print (sql)
     print('Yes, Insert Successfull.')
     db.close()
+    # INSERT INTO `alist`(`id`, `title`, `photoid`, `price`) VALUES (1,'番茄炒蛋',3,60);
+    # INSERT INTO `alist`(`id`, `title`, `photoid`, `price`) VALUES (2,'蒜泥白肉',4,150);
     return render(request,'pa_article.html')
 
-def testurl(request, attr):
-    #article(request)
-    #return redirect
-    #print(type(attr))
-    #print(type(abc)
-    list = selecAttr(attr)
-    return render(request,'testurl.html',locals())
+# def pa_article(request):
+#     db = pymysql.connect(host="localhost", user="test1", password="123", db="test")
+# 
+#     cursor = db.cursor()
+#     cursor.execute("DROP TABLE IF EXISTS employee")
+#     # Create table as per requirement
+#     sql = """CREATE TABLE `employee` (
+#     `id` int(10) NOT NULL AUTO_INCREMENT,
+#     `first_name` char(20) NOT NULL,
+#     `last_name` char(20) DEFAULT NULL,
+#     `age` int(11) DEFAULT NULL,
+#     `sex` char(1) DEFAULT NULL,
+#     `income` float DEFAULT NULL,
+#     PRIMARY KEY (`id`)
+#     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
+#     cursor.execute(sql)
+#     print("Created table Successfull.")
+#     #list=['ks', 'ds', 40, 'M', 8000]
+#     #sql = "INSERT INTO EMPLOYEE(FIRST_NAME,LAST_NAME, AGE, SEX, INCOME) VALUES ('" + list[0] + "','" + list[1] + "', '" + str(list[2]) + "','"+ list[3] +"','" + str(list[4]) + "')"
+#     sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+#     LAST_NAME, AGE, SEX, INCOME)
+#     VALUES ('Mac', 'Su', 20, 'M', 5000)"""
+#     try:
+#         # Execute the SQL command
+#         cursor.execute(sql)
+#         # Commit your changes in the database
+#         db.commit()
+#     except:
+#         # Rollback in case there is any error
+#         db.rollback()
+#     
+#     # 再次插入一条记录
+#     # Prepare SQL query to INSERT a record into the database.
+#     sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+#     LAST_NAME, AGE, SEX, INCOME)
+#     VALUES ('Kobe', 'Bryant', 40, 'M', 8000)"""
+#     try:
+#         # Execute the SQL command
+#         cursor.execute(sql)
+#         # Commit your changes in the database
+#         db.commit()
+#     except:
+#         # Rollback in case there is any error
+#         db.rollback()
+#     #print (sql)
+#     print('Yes, Insert Successfull.')
+#     db.close()
+#     return render(request,'pa_article.html')
+
+#============================owner model==========================
+# 顯示所有主題
+def topics(request):
+    topics = Topic.objects.order_by('date_added')
+    context = {'topics': topics}
+    return render(request, 'topics.html', locals())
+
+# 顯示個別主題和它的entries
+@login_required
+def topic(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    if topic.owner != request.user: # 請求主題與現在使用者不符合
+        raise Http404
+    entries = topic.entry_set.order_by('-date_added')
+    context = {'topic': topic, 'entries': entries}
+    return render(request, 'topic.html', locals())
+
+@login_required
+def new_topic(request):
+    print(request.user)
+    if request.method != 'POST':
+        form = TopicForm()
+    else:
+        #if request.user!="NULL":
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user #必須判斷不是匿名才能save
+            new_topic.save()
+            return HttpResponseRedirect(reverse('topics'))
+
+    context = {'form': form}
+    print(context)
+    return render(request, 'new_topic.html', locals())
+
+def new_entry(request, topic_id):
+    #topics = Topic.objects.order_by('date_added')    
+    #print(topics.id)
+    topic = Topic.objects.get(id=topic_id) # 使用topic_id來取得正確主題物件
+    #entries = topic.entry_set.order_by('-date_added') #新增:topic底下的entry number+1
+    # print(topic)
+    # print(topic_id)
+    # print(entries)
+    
+    if request.method != 'POST':
+        form = EntryForm()        
+    else:
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            #print(new_entry)
+            new_entry.topic = topic
+            #print(new_entry.topic)
+            new_entry.save()
+            return HttpResponseRedirect(reverse('topic',args=[topic_id]))
+    
+    context = {'topic': topic, 'form': form}
+    print(context)
+    return render(request, 'new_entry.html', locals())
+
+@login_required
+def edit_entry(request, entry_id):
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    # print(entry)
+    # print(topic)
+    # print(topic.id) #編輯完要回到topic頁，所以需要topic id
+
+    if topic.owner != request.user: #@login_required
+        raise Http404
+    if request.method != 'POST':
+        form = EntryForm(instance=entry)
+    else:
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('topic',args=[topic.id]))
+        
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    print(context)
+    return render(request, 'edit_entry.html', locals())
+#============================start basic and test==========================
 # def welcome(request):
 #     if 'user_name' in request.GET:
 #         return HttpResponse('Welcome!~'+request.GET['user_name'])
@@ -339,3 +460,60 @@ def testurl(request, attr):
 #             content = ''
 #             email = ''
 #     return render_to_response('comments.html',locals())
+
+@login_required
+def testindex(request):
+    print(type(request.user))
+    #print(request.user.is_authenticated())
+    #return HttpResponse('歡迎光臨我的網站')
+    return render(request,'testindex.html')
+
+def listone(request):
+    print("hello web")
+    return render(request,'basic.html',locals())
+    #return HttpResponse("hello world")
+
+def hello_view(request):
+    return render(request, 'hello_django.html', {
+        'data': "Hello Django ",
+    })
+
+def face(request, kind):
+    print(type(kind))
+    return render(request,'face.html', {'kind':kind})
+
+def printPage(request):
+    # with open('templates/print.html','r',encoding="utf-8") as reader:
+    #         t = template.Template(reader.read())
+    #         c = template.Context({ 'name':'s1', 'price':60, 'comment':'deli', 'is_spicy':False })
+    #         return HttpResponse(t.render(c))
+
+    food1 = { 'name':'番茄炒蛋', 'price':60, 'comment':'好吃', 'is_spicy':False }
+    food2 = { 'name':'蒜泥白肉', 'price':100, 'comment':'人氣推薦', 'is_spicy':True }
+    foods = [food1,food2]
+    # return render_to_response('print.html',locals())
+    return render(request,'print.html',locals())
+
+def cama(request):
+    image = cv2.imread('..\static\images\Desert.jpg',1)
+    # cv2.imshow("demo", image)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+
+    # cap = cv2.VideoCapture(0)
+    # while(True):
+    #     ret , frame = cap.read()
+    #     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    #     cv2.imshow('frame',gray)
+    #     if cv2.waitKey(1) & 0xFF ==ord('q'):
+    #     break
+    # cap.release()
+    # cv2.destroyAllWindows()
+
+def testurl(request, attr):
+    #article(request)
+    #return redirect
+    #print(type(attr))
+    #print(type(abc)
+    list = selecAttr(attr)
+    return render(request,'testurl.html',locals())

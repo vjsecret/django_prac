@@ -34,18 +34,26 @@ urlpatterns = [
     path('article', views.article),
     path('member/<attr>/', views.member),
     path('member/manager/<attr>/', views.manager),
-    # ==================test:==========================
     path('mycrud', views.mycrud),
+    #============================owner model==========================
+    # 顯示所有主題
+    path('topics/',views.topics,name='topics'),
+    # 顯示個別主題
+    path('topic/<int:topic_id>/',views.topic,name='topic'), #path('<int:topic_id>/',views.topic,name='topic'),
+    path('new_topic/',views.new_topic,name='new_topic'),
+    path('new_entry/<int:topic_id>/',views.new_entry,name='new_entry'),
+    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+    # ==================test:==========================
+    #path('welcome', views.welcome),
+    #path('menu', views.menu),
+    #path('list_restaurants', views.list_restaurants),
+    #path('comment', views.comment),
     path('listone', views.listone),
     path('hello_view', views.hello_view),
     path('print', views.printPage),
     path('pa_comic/', views.pa_comic),
     path('pa_comic/<data>/', views.pa_comic),#無法與上面同時存在
     path('pa_article', views.pa_article),
-    #path('welcome', views.welcome),
-    #path('menu', views.menu),
-    #path('list_restaurants', views.list_restaurants),
-    #path('comment', views.comment),
     path('face/<int:kind>/', views.face),
     # path(r'^hello/', hello_view),
     #path('face', views.face),

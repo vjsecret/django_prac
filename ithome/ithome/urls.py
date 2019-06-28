@@ -26,7 +26,6 @@ urlpatterns = [
     path('member', views.member),
     path('mycrud', views.mycrud),
     path('login', views.login),
-    path('login2', views.login2),
     path('car', views.car),
     path('listone', views.listone),
     path('hello_view', views.hello_view),

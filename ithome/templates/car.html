@@ -21,9 +21,27 @@
           <li class="nav-item">
             <a class="nav-link" href="index">Home</a>
           </li>
+          <li class="nav-item" id="mana" style="display:none;">
+            <a class="nav-link" href="mycrud">商品管理</a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link active" href="#">購物車<span class="sr-only">(current)</span></a>
-          </li>                
+          </li>
+          <li class="nav-item" id="btnLogout" style="display:none;">
+            <a class="nav-link">會員登出</a>
+          </li>
+          <li> 
+          <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
+          <input type="password" id="txtPwd" placeholder="Enter Password"><br>
+          </li>
+          <li>
+          <button class="btn btn-outline-success my-sm-0" id="btnLogin">
+            <a class="nav-link">會員登入</a></button>
+          </li>
+          <li>
+          <button class="btn btn-outline-success my-sm-0" id="liSignUp">
+            <a class="nav-link">註冊</a></button>
+          </li>
         </ul>
     </div>
     <div>
@@ -54,7 +72,8 @@
       </div>
     </nav>
     </div>
-
+	<script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <script src="static\js\index.js"></script>
 
   </body>
 </html>

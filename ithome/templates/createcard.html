@@ -1,0 +1,252 @@
+﻿<!doctype html>
+<html lang="zh_TW">
+  <header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/reset.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/content.css" type="text/css" />
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+function ValidateNumber(){
+var raw = "趙錢孫李周吳鄭王馮陳褚衛蔣";
+var ary = [];
+for (var i = 0; i < raw.length; i++)
+    ary.push(raw.substr(i, 1));
+    document.write("原始順序(BIG5/筆劃)<br />")
+    document.write(JSON.stringify(ary, null ," "));
+    document.write("<hr />")
+    ary.sort();
+ 
+    document.write("內建 sort()<br />")
+    document.write(JSON.stringify(ary, null ," "));
+    document.write("<hr />")
+    ary.sort(function(a,b) { return a.localeCompare(b); });
+ 
+    document.write("localeCompare 排序<br />")
+    document.write(JSON.stringify(ary, null ," "));
+    document.write("<hr />")
+    if (navigator.userAgent.indexOf("Chrome") != -1 
+        || navigator.userAgent.indexOf("Safari") != -1) {
+        // chrome 和 Safari 瀏覽器需用 "zh_Hant"
+        ary.sort(function(a,b) { return a.localeCompare(b, "zh-Hant"); });  
+    } else {
+        // 其他瀏覽器使用 "zh-TW"
+        ary.sort(function(a,b) { return a.localeCompare(b, "zh-TW"); }); 
+    }
+    document.write("localeCompare zh-TW 排序<br />")
+    document.write(JSON.stringify(ary, null ," "));
+	console.log(ary);
+}
+function ValidateNumber(e, pnumber) {
+   if ((!/^\d+$/.test(pnumber)) && (pnumber!=""))
+      e.value = /^\d+/.exec(e.value);
+}
+
+$('#displayKeyChange').live('click', function() {// open window
+   $('#password1').val("");
+   $('#password2').val("");
+   $('#not_similiar').hide();
+   $("#passwordStrength").removeClass();
+   $("#passwordStrength").text("");
+   $('#short_password').hide();
+
+   var di = $(this).attr('data-id');
+   $('body, html').animate({
+      scrollTop : '0px'
+   });
+   $('.password-popup' + di).fadeIn();
+   $('.blackBackground').show();
+});
+$('#closeChange').live('click', function() {// close window
+   $('body, html').animate({
+      scrollTop : '0px'
+   });
+
+   $('.password-popup1').fadeOut();
+   $('.blackBackground').hide();
+});
+
+$('#changePWDApply').live('click', function() {
+   if($("#show_password_change").hasClass('checkbox-unchecked')) {
+      if ($('#password1').val() != $('#password2').val()) {
+         $('#not_similiar').show();
+         return;
+      }
+   } else {
+      
+   }
+   
+   if ($('#password1').val().length < 8) {
+      $('#short_password').show();
+      return;
+   }
+   
+   $('#pw1').val($('#password1').val());
+   $('#pwt1').val($('#password1').val());
+   
+   $('body, html').animate({
+      scrollTop : '0px'
+   });
+
+   $('.password-popup1').fadeOut();
+   $('.blackBackground').hide();
+});
+
+function checkApply() {
+    if ($("#RemoteClassOn").hasClass("button-on"))
+        $("#AskRemoteEnableValue").val("1");
+    else
+        $("#AskRemoteEnableValue").val("0");
+
+   var portBumber = parseInt($("#AskRemotePortNumber").val());
+   if (portBumber>65535)
+      $("#error_port_range").show();
+}
+	</script>
+    <title>CreateCard</title>
+<style>
+.wifi-col2 {
+   float: right;
+   width: 200px;
+}
+
+#emptyPlaceholderNormal {
+   height: 100px !important;
+}
+</style>
+  </header>
+  <body>
+      <div id="wrap">
+         <div id="header">
+     
+		</div>
+
+               <div id="content">
+                     <h1><span title="d1570">Remote Access</span></h1>
+                     <h2><span title="d1571">This page allows configuration of the Remote Access.</span></h2>
+
+                     <div class="h3-content clearfix no-padding-bottom">
+
+                           <div class="row tR networkKeyFieldsNormal">
+                              <input class="button button-blank change-pw2" data-id="1" type="button" value="Change key" id="displayKeyChange" >
+                           </div>
+                           <div id="emptyPlaceholderNormal" class="row" style="display:none"></div>
+						   
+						   <div class="popup password-popup1" style="display: none;">
+								<p>
+								   <span>Remote Password (8+ characters)</span>
+								</p>
+								  <div class="right">
+									 <input type="password" id="password2" maxlength="31" />
+								  </div>
+									  
+							<div class="apply-cancel">
+							   <input class="button button-apply" type="button" value="Save" id="changePWDApply" >
+							   <input class="button button-cancel" type="button" value="Cancel" id="closeChange">
+							</div>
+							</div>
+						
+						
+						
+						
+						
+                        <div class="wifi-col2">
+                           <div class="row">
+                              <input type="hidden" value="0" name="AskRemoteEnableValue" id="AskRemoteEnableValue" />
+                           </div>
+                           <div class="row">
+                              <input type="text" name="AskRemoteUserName" value="" maxlength="31" />
+                           </div>
+                           <div class="row">
+                              <input type="text" name="AskRemotePortNumber" id="AskRemotePortNumber" value="" onkeyup="ValidateNumber(this,value)" maxlength="5" />
+                           </div>
+
+                           <div class="row networkKeyFieldsNormal">
+                              <input type="password" readonly="readonly" id="pw1" name="AskRemotePassword" value="" />
+                              <input type="text" readonly="readonly" id="pwt1" style="display: none;" />
+                           </div>
+
+                           <div class="row tR networkKeyFieldsNormal">
+                              <input class="button button-blank change-pw2" data-id="1" type="button" value="Change key" id="displayKeyChange" title="btn1101">
+                           </div>
+                           <div id="emptyPlaceholderNormal" class="row" style="display:none"></div>
+                           
+                        </div>
+                     </div>
+			
+
+					 
+					 
+                   <div class="popup password-popup1" style="display: none;">
+                        <p class="title tL">
+                           <span title="d1579">Remote Password (8+ characters)</span>
+                        </p>
+
+                        <div class="row hidden-pw-row">
+                           <div class="left" title="d1479">
+                              Password
+                           </div>
+                           <div class="right">
+                              <input type="password" id="password1" maxlength="31" />
+                           </div>
+                        </div>
+
+                        <div id="pswdhide">
+                           <div class="row hidden-pw-row">
+                              <div class="left" title="d1480">
+                                 Re-enter Password
+                              </div>
+                              <div class="right">
+                                 <input type="password" id="password2" maxlength="31" />
+                              </div>
+                           </div>
+                        </div>
+                        
+                        <div class="row">
+                           <div class="left" title="d1481">
+                              Password Strength
+                           </div>
+                           <div class="right" style="width: 194px;">
+                              <div id="passwordStrength"> </div>
+                           </div>
+                        </div>
+                        <div class="message message-info">
+                           <span title="d1577">We recommend you to generate strong key using different character types (minimum 8)</span>
+                        </div>
+                        <div class="row">
+                           <div class="right">
+                              <span title="d1456">Display Characters</span>
+                              <input class="button checkbox checkbox-unchecked popup-checkbox" type="button" id="show_password_change">
+                           </div>
+                        </div>
+                        <div class="message message-error" style="display: none;" id="not_similiar" >
+                           <span title="d1485">The passwords you entered do not match.</span>
+                        </div>
+                        <div class="message message-error wrong-password" style="display: none;">
+                           <span title="d1486">You are using forbidden characters.</span>
+                        </div>
+                        <div class="message message-error" style="display: none;" id="short_password" >
+                           <span title="d1487">The length of network key must be more than 8 characters.</span>
+                        </div>
+                        <div class="apply-cancel">
+                           <input class="button button-apply" type="button" value="Save" id="changePWDApply" title="btn1104">
+                           <input class="button button-cancel" type="button" value="Cancel" id="closeChange" title="btn1102">
+                        </div>
+                     </div>
+		 </div>
+	</div><!--wrap-->
+  </body>
+  
+
+</html>

@@ -17,17 +17,27 @@
 		.row{
 				flex-wrap: nowrap;
 			}
+	.footer{
+		background-color:#CCC;
+		color:#FFF;
+		position:fixed;
+		bottom:0px;
+		left:0px;	
+		font:12px;
+		width:100%;
+		text-align:center;
+		}
     </style>
   </head>
   <body>
     <!--<h1>Hello, world!</h1>-->
-    <div class="row">
-        <div class="col-md-8 pull-left">
+	<div class="row">
+        <div class="col-md-8">
             <ul class="nav nav-tabs navbar-fixed-top">
               <li class="nav-item active">
                 <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
-
+        
               <li class="nav-item" id="mana" style="display:none;">
                 <a class="nav-link" href="mycrud">商品管理</a>
               </li> 
@@ -37,31 +47,25 @@
               <li class="nav-item" id="btnLogout" style="display:none;">
                 <a class="nav-link">會員登出</a>
               </li>
-              <li> 
-              <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
-			  <input type="password" id="txtPwd" placeholder="Enter Password"><br>
-              </li>
-              <li>
-              <button class="btn btn-outline-success my-sm-0" id="btnLogin">
-                <a class="nav-link">會員登入</a></button>
-              </li>
-              <li>
-              <button class="btn btn-outline-success my-sm-0" id="liSignUp">
-                <a class="nav-link">註冊</a></button>
-              </li>
-<!--			  <li class="nav-item" id="mana2">
-                <a class="nav-link" href="mycrud">商品管理</a>
-              </li>   -->              
-            </ul>
- 
+             </ul>
         </div>
-        <div class="col-md-4 pull-right">
+        <div class="col-md-4"> 
+        <input type="Email" id="txtEmail" placeholder="Enter Email"><br>
+        <input type="password" id="txtPwd" placeholder="Enter Password"><br>
+        
+        <button class="btn btn-outline-success my-sm-0" id="btnLogin">
+        <a class="nav-link">會員登入</a></button>
+        <button class="btn btn-outline-success my-sm-0" id="liSignUp">
+        <a class="nav-link">註冊</a></button>
+        </div>                           
+
+        <!--<div class="col-md-4 pull-right">
 <form class="form-inline my-lg-0" action="http://www.google.com/search" method="get">
           <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="q">
           <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
         </form>
-        </div>
-    </div>
+        </div>-->
+	</div>
 
 <div class="bd-example">
   <div id="mycarousel" class="carousel slide" data-ride="carousel">
@@ -138,6 +142,7 @@
 </div>
         <div class="col-sm-8"><img src="..\static\images\coffee\coffee04.jpg" class="d-block w-100" alt="..."></div>
 </main>
+<div class="footer" id="footer">版權所有，翻拷必究</footer>
 
 	<script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <script src="static\js\index.js"></script>

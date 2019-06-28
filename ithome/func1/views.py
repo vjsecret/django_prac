@@ -7,7 +7,7 @@ import cv2
 
 def index(request):
     return render(request,'index.html')
-    
+
 def member(request):
     return render(request,'member.html')
     
@@ -16,9 +16,6 @@ def mycrud(request):
     
 def login(request):
     return render(request,'login.html')
-    
-def login2(request):
-    return render(request,'login2.html')
      
 def car(request):
     return render(request,'car.html')

@@ -1,0 +1,635 @@
+.unused {
+	opacity: 0.2;
+}
+/*.new {
+	color: #14cd05 !important;
+}*/
+.hide {
+	 display: none;
+}
+/*##########################################################################
+	HTML5 HACKS, RESETS AND BASICS
+##########################################################################*/  
+header, section, aside, nav, article {  
+	display: block;  
+}
+
+header, section, aside, nav, article, ul, li, h1, h2, h3, body, div {
+	padding: 0;
+	margin: 0;
+}
+
+ul, li {
+	list-style-type: none;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+*:first-child+html .clearfix {
+	min-height: 0;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+a {
+	color: #A0A0A0;
+	text-decoration: none;
+}
+#content a {
+		text-decoration: underline;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+a {
+	-webkit-transition: color 0.5s ease-out;  /* Saf3.2+, Chrome */
+	-moz-transition: color 0.5s ease-out;  /* FF4+ */
+	-ms-transition: color 0.5s ease-out;  /* IE10 */
+	-o-transition: color 0.5s ease-out;  /* Opera 10.5+ */
+	transition: color 0.5s ease-out;
+}
+/*
+@font-face {
+    font-family: 'VodafoneRgRegular';
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonerg-webfont.eot');
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonerg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg-webfont.woff') format('woff'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg-webfont.ttf') format('truetype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg-webfont.svg#VodafoneRgRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'VodafoneRgBold';
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonerg_bd-webfont.eot');
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonerg_bd-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg_bd-webfont.woff') format('woff'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg_bd-webfont.ttf') format('truetype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonerg_bd-webfont.svg#VodafoneRgBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'VodafoneLtRegular';
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonelt-webfont.eot');
+    src: url('http://sukuon.tpin.idv.tw/fonts/vodafonelt-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonelt-webfont.woff') format('woff'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonelt-webfont.ttf') format('truetype'),
+         url('http://sukuon.tpin.idv.tw/fonts/vodafonelt-webfont.svg#VodafoneLtRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+*/
+.noOpacity {
+	opacity: 0 !important;
+}
+.noOpacity2 {
+	opacity: 0 !important;
+}
+.op40 {
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+}
+.rel {
+	position: relative !important;
+}
+.abs {
+	position: absolute !important;
+}
+.tR {
+	text-align: right !important;
+}
+.tL {
+	text-align: left !important;
+}
+.tC {
+	text-align: center !important;
+}
+.bold {
+	font-weight: bold !important;
+}
+.italic {
+	font-style: italic !important;
+}
+.fL {
+	float: left !important;
+}
+.fR {
+	float: right !important;
+}
+/*##########################################################################
+	LAYOUT
+##########################################################################*/
+ 
+body {
+	font-size: 100%;
+	font-color: #444; /* THIS LINE ISN'T VALID */
+	font-family: Arial, sans-serif;
+	background-color: #f2f2f2;
+}
+#wrap {
+	width: 960px;
+	margin: 0 auto;
+}
+#head-wrap {
+	margin-bottom: 13px;
+	position: relative;
+}
+#inner-wrap {
+	width: 960px;
+	position: relative;
+}
+.menuItem {
+	clear: both;
+}
+
+/*##########################################################################
+	OVERVIEW DESIGN
+##########################################################################*/
+
+#inner-wrap .articlediv#overview {
+	width: 958px;
+}
+.expert .ov06basic {
+	display: none;
+}
+
+#inner-wrap .articlediv#overview img {
+	display: block;
+}
+
+#inner-wrap .articlediv#overview .overviewCategoryLink {
+	display: block;
+	position: absolute;
+	top: 255px;
+	left: 92px;
+	width: 83px;
+	height: 83px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	background-color: #000;
+	background-image: none;
+}
+
+#training-icon {
+	position: absolute;
+	top: 43px;
+	left: 150px;
+}
+
+/*##########################################################################
+	HEADER AND NAVIGATION
+##########################################################################*/
+#header {
+	padding-bottom: 30px;
+}
+
+#head-wrap {
+	height: 32px;
+	padding-top: 36px;
+	padding-bottom: 6px;
+	width: 960px;
+}
+
+#header img {
+	float: left;
+	margin-right: 10px;
+}
+ 
+#header h1 {
+	font-size: 18px;
+	width: 300px;
+	line-height: 35px;
+	font-family: VodafoneRgRegular, Arial, sans-serif;
+}
+ 
+#header ul {
+	position: relative;
+	height: 44px;
+	width: 962px;
+}
+ 
+#header li a {
+	color: #333;
+	font-family: Arial,sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	height: 44px;
+	line-height: 40px;
+	overflow: hidden;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 160px;
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+#header li a:hover {
+	color: #000000;
+}
+#phone a {
+	left: 160px;
+}
+#internet a {
+	left: 320px;
+}
+#wifi a {
+	left: 480px;
+}
+#settings a {
+	left: 640px;
+}
+
+#navigation {
+	float: left;
+	width: 192px;
+	height: 474px;
+	text-align: right;
+	opacity: 1;
+	-webkit-transition: opacity 0.3s ease-out;  /* Saf3.2+, Chrome */
+	-moz-transition: opacity 0.3s ease-out;  /* FF4+ */
+	-ms-transition: opacity 0.3s ease-out;  /* IE10 */
+	-o-transition: opacity 0.3s ease-out;  /* Opera 10.5+ */
+	transition: opacity 0.3s ease-out;
+}
+#navigation.fadeOut {
+	opacity: 0;
+}
+#navigation > ul {
+	width: 192px;
+	padding-top: 20px;
+}
+#navigation > ul > li {
+	width: 192px;
+	margin-left: -192px;
+	min-height: 40px;
+	text-shadow: 0 1px 0 #FFFFFF;
+	line-height: 40px;
+}
+#navigation ul li a {
+	font-family: Arial,sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	width: 192px;
+	display: block;
+	text-decoration: none;
+	color: #a0a0a0;
+	max-height: 40px;
+}
+.notOverview #navigation ul li {
+	margin-left: 0px;
+}
+#navigation ul li.active > a {
+	color: #000;
+}
+#navigation a:hover {
+	color: #555;
+	-webkit-transition: color 0.3s ease-out;  /* Saf3.2+, Chrome */
+	-moz-transition: color 0.3s ease-out;  /* FF4+ */
+	-ms-transition: color 0.3s ease-out;  /* IE10 */
+	-o-transition: color 0.3s ease-out;  /* Opera 10.5+ */
+	transition: color 0.3s ease-out;
+}
+.subMenu {
+	height: 0px;
+	border-top: 1px solid #bebebe;
+	width: 192px;
+	overflow: hidden;
+	float: right;
+	background: url('../image/submenu_top_shadow.png') no-repeat left top, url('../image/submenu_bottom_shadow.png') no-repeat left bottom transparent;
+}
+
+.subMenu.border {
+	border-bottom: 1px solid #bebebe;
+}
+
+#screensLoggedIn {
+	float: right;
+	font-size: 12px;
+	color: #666;
+	padding: 6px 16px 0 0;
+}
+
+#logout {
+	float: right;
+	width: 27px;
+	height: 26px;
+	background: url("../image/logout_normal.png");
+}
+#logout:active {
+	background: url("../image/logout_pressed.png");
+}
+#basexp {
+	float: right;
+	font-size: 14px;
+	height: 21px;
+	margin-right: 7px;
+	padding: 5px 0 0 10px;
+	text-shadow: 1px 0 0 #FFFFFF;
+	text-transform: capitalize;
+	width: 86px;
+	color: #333;
+	display: block;
+}
+#basexp.user {
+	background: url("../image/button_grey_narrow_shadow.png");
+}
+
+/*##########################################################################
+	CONTENT
+##########################################################################*/
+
+#indicator {
+	left: 235px;
+	position: absolute;
+	top: 27px;
+}
+.whiteLayer {
+	left: 225px;
+	position: absolute;
+	top: 26px;
+	z-index: 5;
+}
+#content {
+	padding: 36px 72px 104px;
+	width: 590px;
+	min-height: 334px;
+	position: relative;
+}
+#content.no-apply-cancel {
+	padding-bottom: 72px;
+}
+
+#helpButtonsShort {
+	left: 924px;
+	position: absolute;
+	top: 9px;
+	width: 26px;
+	height: 26px;
+	z-index: 100;
+}
+#helpButtonsNone {
+	left: 921px;
+	position: absolute;
+	top: 10px;
+	width: 27px;
+	height: 28px;
+}
+
+#r {
+	position: relative;
+}
+
+#resetR {
+	background-image: url("../image/button_purple_narrow_shadow.png");
+	color: #FFFFFF;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: bold;
+	height: 24px;
+	left: 470px;
+	padding: 6px 0 0 1px;
+	position: absolute;
+	text-align: center;
+	top: 21px;
+	width: 96px;
+}
+#cancelR {
+	background-image: url("../image/button_grey_narrow_shadow.png");
+	color: #333333;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: bold;
+	height: 24px;
+	left: 569px;
+	padding: 6px 0 0 0;
+	position: absolute;
+	text-align: center;
+	top: 21px;
+	width: 96px;
+}
+#resetR:active {
+	background-image: url("../image/button_purple_pressed.png");
+}
+#cancelR:active {
+	background-image: url("../image/button_grey_pressed.png");
+}
+#resetT {
+	color: #333333;
+	font-size: 14px;
+	left: 90px;
+	position: absolute;
+	top: 27px;
+}
+#h {
+	position: relative;
+}
+input.active {
+	font-style: normal !important;
+	color: #000 !important;
+}
+
+.button-apply:active {
+	background-image: url(../image/button_purple_pressed.png) !important;
+}
+.button-cancel:active {
+	background-image: url(../image/button_grey_pressed.png) !important;
+}
+.button-cancel-purple:active {
+	background-image: url(../image/button_purple_pressed.png) !important;
+}
+
+.faded {
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+}
+.button-link {
+	text-decoration: none;
+}
+
+/*##########################################################################
+	POPUP 
+##########################################################################*/
+
+.blackBackground {
+	position:			fixed !important;  
+	_position:			absolute !important; 
+	height:				100%;  
+	width:				100%;  
+	top:				0;  
+	left:				0;  
+	background:			#000000;  
+	border:				1px solid #cecece;  
+	z-index:			9997;  
+	opacity:			0.7;
+	filter: alpha(opacity=70);
+}
+.popup {
+	left: 50%;
+	margin-left: -222px;
+	position: absolute;
+	text-align: center;
+	top: 50px;
+	background-color: #ffffff;
+	z-index: 9998;
+	-moz-box-shadow: 0 0 30px #555;
+	-webkit-box-shadow: 0 0 30px #555;
+	box-shadow: 0 0 30px #555;
+	padding: 34px 40px 40px 40px;
+	width: 364px;
+	font-size: 14px;
+	line-height: 24px;
+}
+.popup .apply-cancel {
+	position: static;
+	bottom: auto;
+	right: auto;
+	padding-top: 24px;
+	text-align: right;
+}
+.popup .button-apply {
+	margin-right: 0;
+}
+.popup.big {
+	width: 432px;
+	margin-left: -256px;
+}
+
+.popup p {
+	font-size: 14px;
+	line-height: 24px;
+	margin-bottom: 8px;
+}
+.popup .title {
+	font-weight: bold;
+	margin-bottom: 24px;
+}
+.popup .title.no-margin-bottom {
+	margin-bottom: 0;
+}
+
+.popup textarea {
+	background-color: #ffffff;
+	border: 1px solid #959595;
+	padding: 12px 8px 12px 8px;
+	width: 100%;
+	color: #666666;
+	font-style: italic;
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+	resize: none;
+}
+.popup .select-categories {
+	float: left;
+	width: 50%;
+	text-align: left;
+}
+.popup .select-categories li {
+	padding: 6px 0;
+}
+.popup .select-categories input {
+	margin-right: 16px;
+}
+.popup .configuration-comment {
+	color: #666666;
+	font-style: italic;
+	font-size: 14px;
+}
+
+/*##########################################################################
+	FOOTER
+##########################################################################*/
+#footerMenu {
+	font-size: 13px;
+	padding: 10px 0 10px 0;
+	text-align: left;
+	color: #888;
+	line-height: 1.5;
+	width: 100%;
+	float: right;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s ease-out;  /* Saf3.2+, Chrome */
+	-moz-transition: opacity 0.3s ease-out;  /* FF4+ */
+	-ms-transition: opacity 0.3s ease-out;  /* IE10 */
+	-o-transition: opacity 0.3s ease-out;  /* Opera 10.5+ */
+	transition: opacity 0.3s ease-out;
+	padding-bottom: 60px;
+}
+
+.greyItalic {
+	color: #424242;
+	font-size: 13px;
+	font-style: italic;
+}
+
+.disabled {
+	opacity: 0.5;
+}
+
+
+#langSelector {
+    font-size: 13px;
+    padding: 15px 0;
+}
+
+#langSelector a {
+    padding: 0 7px 0 0;
+}
+
+#langAndFirmware {
+	clear: both;
+	width: 734px;
+	float: right;1
+}
+
+.overview #langAndFirmware {
+	width: 100%;
+}
+
+.hidden_menu
+{
+	float: left;
+    margin-bottom: 10px;
+    padding: 12px;
+    width: 29.6%;
+}
+
+.hidden_menu_title
+{
+	font-weight: bold;
+}
+
+.hidden_menu ul, .hidden_menu li
+{
+	list-style-type: decimal;
+}
+
+#exitToPlayground
+{
+	text-align: right;
+}
+
+#exitToPlayground a
+{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.lanSubnect-col1{
+	float: left;
+    width: 194px;
+}

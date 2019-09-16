@@ -44,6 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'func1',
+    'testPassValue',
+    'df_user',
+    'df_goods',
+    #'tinymce',
+    'df_cart',
+    'df_order',
+    #'haystack',
 ]
 
 MIDDLEWARE = [

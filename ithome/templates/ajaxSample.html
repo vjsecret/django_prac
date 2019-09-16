@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh_TW">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Hello, world!</title>
+<script type="text/javascript">
+$( document ).ready(function() {
+	$('#btnTerminalSvr').bind("click",function(){
+	//$('#btnTerminalSvr').on('click', function () {
+	//alert('嘿，我聽說您點選了按鈕...' );
+		$.ajax({
+		url: './carAjax',
+		type: 'POST',
+		data: {},
+		dataType: 'json',
+		timeout: 100,
+		success: function(result) {
+		//console.log(result.result);
+		if ( result.result == "post_success" ) {
+		//$("#ntfText").html("發起成功");
+		$("#ntfText").html(result.result);
+		}else {
+		$("#ntfText").html("重複發起了");
+			}
+		}
+
+			
+		});
+	});
+	
+	//$('#btnTtest').bind("click",function(){
+	$('#btnTtest').on('click', function () {
+	//alert('嘿，我聽說您點選了按鈕...' );
+		//var x = document.getElementById("content").getElementsByClassName("card")[0];
+		//var index = $("#content img").index(this);		
+		//alert(index);
+
+         //Li = document.getElementsByTagName("div").getElementsByTagName("li");
+		 Li = document.getElementById("content").getElementsByClassName("price")
+         Lilength = Li.length;
+		 console.log(Lilength);
+         for(let i =0;i<Lilength;i++){
+                Li[i].index = i;
+                Li[i].onclick = function(){
+                    var index = this.index;
+                    alert(index);
+            }
+        }
+
+		console.log(this.name);
+		const it=this.name;
+		console.log(it-1);
+		//var b = document.getElementById("content").getElementsByClassName("price")[it].value;
+		var b = document.getElementsByClassName("price")[it].innerHTML;
+		console.log(b);
+		console.log(b.value);
+		console.log(this.id);
+		//console.log("price"+this.name);
+		//var tmp="#price"+this.name //var price=$('"#price"+this.name').val();
+		//var price=$(tmp).val();
+		console.log(price[it]);
+		aa=price[it];
+		console.log(aa.value);
+
+		//const dictionary = new Dictionary();
+		// 新增鍵值
+		//dictionary.set('title', '酸菜');
+		//dictionary.set('price', '180');
+
+		//console.log(dictionary.keys()); 
+		//console.log(dictionary.values()); 
+		const t1 = document.getElementsByClassName("card-title")[it].innerHTML;
+		console.log(t1)
+		const a="price";
+		items = {};
+		items["title"]=t1;
+		items[a]=b;
+		console.log(items);
+		
+		$.ajax({
+		url: './addCar',
+		type: 'POST',
+		data: items,
+		dataType: 'json',
+		timeout: 100,
+		success: function(result) {
+		//console.log(result.result);
+		if ( result.result == "post_success" ) {
+		//$("#ntfText").html("發起成功");
+		$("#ntfText").html(result.result);
+		}else {
+		$("#ntfText").html("重複發起了");
+			}
+		}
+
+			
+		});
+	});
+	
+	//$('#addCar1').bind("click",function(){
+	$('#addCar1').on('click', function () {
+	//alert('嘿，我聽說您點選了按鈕...' );
+		console.log(this.name);
+		const it=this.name;
+		const t1 = document.getElementsByClassName("card-title")[it].innerHTML;
+		console.log(t1)
+		//var b = document.getElementById("content").getElementsByClassName("price")[it].value;
+		var b = document.getElementsByClassName("price")[it].innerHTML;
+		console.log(b);
+		console.log(b.value);
+		const a="price";	
+		items = {};
+		items["title"]=t1;
+		items[a]=b;
+		//items["price"]="180";
+		console.log(items);
+		$.ajax({
+		url: './addCar',
+		type: 'POST',
+		data: items,
+		//data: {"title": "酸菜", "price": "180"},
+		dataType: 'json',
+		timeout: 100,
+		success: function(result) {
+		//console.log(result.result);
+		if ( result.result == "post_success" ) {
+		//$("#ntfText").html("發起成功");
+		$("#ntfText").html(result.result);
+		}else {
+		$("#ntfText").html("重複發起了");
+			}
+		}
+
+			
+		});
+	});
+
+});
+
+</script>
+</head>
+<body>
+<h2 id="ntfText" >就緒</h2></br>
+<button type="button" id="btnTerminalSvr">關閉伺服器</button>
+<input type="hidden" name="test1" value="10">Test1</p>
+{{my_class}}<BR>
+{{my_student}}<BR>
+{{my_profile}}
+<div><p>{{ result }}</p></div>  
+<form action="/formTest" method="post">{% csrf_token %}  
+	<input type="text" name="key">  
+	<input type="text" name="key">  
+	<input type="hidden" name="username" value="york" />
+	<input type="submit" value="Search" >  
+</form>  
+<form method="post" action="./formTest">
+{% csrf_token %}
+  <div class="col-md-4"> 		
+	<button class="btn btn-outline-success my-sm-0" name="submit" id="btnLogin">
+	<a class="nav-link" >會員登入</a></button>	
+</div>
+</form>
+{% if list %}
+<div id="content" class="col-12 col-m-12">
+	{% for infolist in list %}
+		  <div class="card" style="width: 100%;">
+			<img src="/static/images/face{{infolist.photoid}}.jpg" class="card-img-top" alt="...">
+			<div class="card-body">
+			  <a href="/comic/info/{{infolist.id}}" >{{infolist.title}}</a>
+              <h5 class="card-title" id="title">{{infolist.title}}</h5>
+			  {% if infolist.content %}
+              <p class="card-text" id="content">{{infolist.content}}</p>
+			  {% endif %}
+			  {% if infolist.price %}
+			  <p class="card-text">價格:<span id="price" class="price" value="{{infolist.price}}">{{infolist.price}}</span></p>
+			  <button type="button" button class="btn btn-outline-success my-sm-0" id="addCar1" name='{{infolist.id}}'>加入購物車</button>
+			  <button type="button" id="btnTtest" name='{{infolist.id}}'>test</button>
+			  <form action="/showinfo/article/" method="POST" name="form">
+			  {% csrf_token %}
+			  {% endif %}			  
+			</div>
+		  </div>
+	{% endfor %}
+
+</div>
+{% else %}
+	<p>請新增資料</p>
+{% endif %}			
+</body>
+</html>

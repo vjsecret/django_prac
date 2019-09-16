@@ -10,6 +10,208 @@ from func1.models import Topic, Entry
 from func1.forms import TopicForm,EntryForm
 import pymysql
 import datetime
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+def formTest(request):
+    if request.method == 'POST':
+        print("==========fred: showinfo post=============")
+        print(request)
+        print(request.COOKIES)
+        print(request.user)
+        print(request.get_host)
+        print(request.method)
+        print(request.scheme)
+        print(request.POST.getlist)
+        print(request.content_params)
+        print(request.path)
+        print(request.path_info)
+        v1 = request.POST.getlist('username', '')
+        print(v1)
+        result_list = request.POST.getlist('key', '')
+        result = str(result_list)
+        print(result)
+
+        db = pymysql.connect(host="localhost", user="test1", password="123", db="item")
+        cursor = db.cursor()
+        
+        #sql = "DELETE FROM my_student WHERE id = 2"
+        #sql = "UPDATE my_class SET id = 4 WHERE id = 5"
+        #sql = "UPDATE my_profile SET pname = '改小紅檔案' WHERE pname = '小紅檔案'"
+        #cursor.execute(sql)
+        #db.commit()
+        
+        cursor.execute("SELECT * FROM my_student")
+        #cursor.execute("SELECT cname FROM my_class WHERE id=(SELECT cid FROM my_student WHERE name = '小明');")
+        my_student = cursor.fetchall()
+
+        cursor.execute("SELECT * FROM my_class")
+        my_class = cursor.fetchall()
+        
+        cursor.execute("SELECT * FROM my_profile")
+        my_profile = cursor.fetchall()
+
+#         cursor.execute("DROP TABLE IF EXISTS listi")
+#         sql = """SELECT * FROM `my_student`,
+# )"""
+#         try:
+#             ww=cursor.execute(sql)
+#             print(ww)
+#             db.commit()
+#             print("add success")
+#         except:
+#             print("add fail")
+#             db.rollback()
+        db.close()
+    return render(request,'ajaxSample.html',locals())
+
+@login_required
+def cart(request):
+    uid = request.session.get('uid')
+    carts = Cart.objects.filter(user_id=uid)
+
+    context = {'title': '購物車',
+               'name': 1,
+               'carts': carts}
+    return render(request, 'cart.html', context)
+
+@csrf_exempt
+def addCar(request):
+    if request.method == 'POST':
+        print("==========fred: showinfo post=============")
+        db = pymysql.connect(host="localhost", user="test1", password="123", db="item")
+        # if str== "comic":
+        #     db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+        # else:
+        #     db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
+        cursor = db.cursor()
+        # 按字典返回 
+        # cursor = db.cursor(pymysql.cursors.DictCursor)
+        
+        print(request.path)
+        print(request.path_info)
+        print(request.content_params)
+        print(request.scheme)
+        # listA=request.content_params
+        # for ix in range(0,len(listA)):
+        #     print(listA[ix])
+        print(request.POST)
+        var1 = request.POST.getlist('title', '')
+        print(var1)
+        var2 = request.POST.getlist('price', '')
+        print(var2)
+        print(type(var2))
+        print(var2[0])
+        #result = str(result_list)
+
+        cursor.execute("DROP TABLE IF EXISTS listi")
+        sql = """CREATE TABLE `listi` (
+        `id` int(10) DEFAULT NULL,
+        `title` char(20) NOT NULL,
+        `price` int(10) DEFAULT NULL
+        )"""
+        cursor.execute(sql)
+        #print("Created table Successfull.")
+        # cursor.execute("DROP TABLE IF EXISTS idlisti")
+        # sql = """CREATE TABLE `idlisti` (
+        # `id` int(10) DEFAULT NULL
+        # )"""
+        # cursor.execute(sql)
+        # cursor.execute("DROP TABLE IF EXISTS titlelisti")
+        # sql = """CREATE TABLE `titlelisti` (
+        # `title` char(20) NOT NULL
+        # )"""
+        # cursor.execute(sql)
+        # cursor.execute("DROP TABLE IF EXISTS pricelisti")
+        # sql = """CREATE TABLE `pricelisti` (
+        # `price` int(10) DEFAULT NULL
+        # )"""
+        # cursor.execute(sql)
+        
+        listAS=[]
+        #list=[1, str(var1), int(var2[0])]
+        listAS.append(2)
+        listAS.append(str(var1[0]))
+        listAS.append(int(var2[0]))
+        print(type(int(var2[0])))
+
+        a=3
+        #sql = "INSERT INTO listi(ID,TITLE,PRICE) VALUES (1,'"+ listAS[1] +"',' + listAS[2] +')"
+        sql = "INSERT INTO listi(ID,TITLE,PRICE) VALUES ( '"+str(listAS[0])+"','" + listAS[1] + "','" + var2[0] + "')"
+        #sql = """INSERT INTO listi(ID, TITLE,PRICE) VALUES (1, '酒菜',130)""" 
+        try:
+            cursor.execute(sql)
+            db.commit()
+            print("add success")
+        except:
+            print("add fail")
+            db.rollback()
+        db.close()
+
+        a = {}
+        a["result"] = "post_success"
+        #return HttpResponse(json.dumps(a), content_type='application/json')
+        return HttpResponseRedirect(reverse('showinfo'))
+        #return render(request,'showinfo.html',locals())
+@csrf_exempt
+def carAjax(request):
+    # is_ajax = False
+    # if request.is_ajax():
+    #     is_ajax = True
+    # name_dict = {'twz': 'python and Django',
+    #              'abc': 'teach Django', 
+    #              'is_ajax': is_ajax}
+    # return JsonResponse(name_dict)
+    if request.method == 'POST':
+        a = {}
+        a["result"] = "post_success"
+        return HttpResponse(json.dumps(a), content_type='application/json')
+
+#django ajax:
+#https://zwindr.blogspot.com/2016/02/django-json-ajax.html
+#https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/365618/
+def ajaxSample(request):
+    #a = range(100)
+    # safe 預設為 True => 只能傳 dictionary
+    # False => 可傳 dic 以外的物件
+    #return JsonResponse(list(a), safe=False)
+    #return HttpResponse(json.dumps(list(a)), content_type='application/json')
+    db = pymysql.connect(host="localhost", user="test1", password="123", db="article")
+    # if str== "comic":
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+    # else:
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
+    cursor = db.cursor()
+    # 按字典返回 
+    # cursor = db.cursor(pymysql.cursors.DictCursor)
+    list=getlist("article", cursor)
+
+    db.close()
+
+    print("==========fred: ajaxSample get=============")
+    form = TopicForm()
+    return render(request,'ajaxSample.html',locals())
+
+def teststore(request):
+    #a = range(100)
+    # safe 預設為 True => 只能傳 dictionary
+    # False => 可傳 dic 以外的物件
+    #return JsonResponse(list(a), safe=False)
+    #return HttpResponse(json.dumps(list(a)), content_type='application/json')
+    db = pymysql.connect(host="localhost", user="test1", password="123", db="article")
+    # if str== "comic":
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
+    # else:
+    #     db = pymysql.connect(host="localhost", user="test1", password="123", db="comic")
+    cursor = db.cursor()
+    # 按字典返回 
+    # cursor = db.cursor(pymysql.cursors.DictCursor)
+    list=getlist("article", cursor)
+
+    db.close()
+
+    print("==========fred: teststore get=============")
+    return render(request,'teststore.html')
 
 def selecAttr(str):
     Now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -129,7 +331,7 @@ def register(request):
 
     context = {'form': form}
     return render(request, 'register.html', context)
-
+#@csrf_exempt
 def showinfo(request, attr):
     db = pymysql.connect(host="localhost", user="test1", password="123", db=attr)
     # if str== "comic":
@@ -151,6 +353,13 @@ def showinfo(request, attr):
         result_list = request.POST.getlist('price', '')
         print(result_list)
         result = str(result_list)
+        var1 = request.POST.getlist('title', '')
+        print(var1)
+        var2 = request.POST.getlist('price', '')
+        print(var2)
+        print(type(var2))
+        print(var2[0])
+        
 
         # form = TopicForm(request.POST)
         # if form.is_valid():
@@ -159,11 +368,14 @@ def showinfo(request, attr):
         #     new_topic.save() # 新增區塊
         # context = {'form': form}
         #return JsonResponse(list)
+        alist = {'title': var1[0], 'price': var2[0]}
+        #return HttpResponse(json.dumps(alist), content_type='application/json')
+        return render(request,'showinfo.html',locals())
     #if request.method!="POST":
     else:
         print("==========fred: showinfo get=============")
         form = TopicForm()
-    return render(request,'showinfo.html',locals())
+        return render(request,'showinfo.html',locals())
 
 @login_required
 def car(request):
@@ -343,8 +555,10 @@ def pa_article(request):
 
 #============================owner model==========================
 # 顯示所有主題
+@login_required
 def topics(request):
-    topics = Topic.objects.order_by('date_added')
+    print(request.user)
+    topics = Topic.objects.filter(owner=request.user).order_by('date_added') #讓 Django 只從資料庫中獲取 owner 屬性為當前使用者的 Topic 物件 #topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'topics.html', locals())
 
@@ -360,7 +574,7 @@ def topic(request, topic_id):
 
 @login_required
 def new_topic(request):
-    print(request.user)
+    #print(request.user)
     if request.method != 'POST':
         form = TopicForm()
     else:

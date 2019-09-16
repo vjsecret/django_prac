@@ -1,6 +1,42 @@
-﻿{% extends 'model_index1.html' %}
+﻿{% extends 'model_index1_ajax.html' %}
 {% block title %} 店家 {% endblock%}
 {% block header %}
+<script type="text/javascript">
+function addItem(){
+					console.log(this.name);
+					const it=this.name;
+					const t1 = document.getElementsByClassName("card-title")[it].innerHTML;
+					console.log(t1)
+					//var b = document.getElementById("content").getElementsByClassName("price")[it].value;
+					var b = document.getElementsByClassName("price")[it].innerHTML;
+					console.log(b);
+					console.log(b.value);
+					const a="price";	
+					items = {};
+					items["title"]=t1;
+					items[a]=b;
+					//items["price"]="180";
+					console.log(items);
+					
+					$.ajax({
+					url: './addCar',
+					type: 'POST',
+					data: items,
+					//data: {"title": "酸菜", "price": "180"},
+					dataType: 'json',
+					timeout: 100,
+					success: function(result) {
+						//console.log(result.result);
+						if ( result.result == "post_success" ) {
+							//$("#ntfText").html("發起成功");
+							$("#ntfText").html(result.result);
+							}else {
+							$("#ntfText").html("重複發起了");
+							}
+						}										
+					});
+}
+</script>
 <header>
 <div class="container">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark"><!--<nav class="navbar navbar-expand-md fixed-top font-weight-bold">-->
@@ -114,17 +150,21 @@
 			<img src="/static/images/face{{infolist.photoid}}.jpg" class="card-img-top" alt="...">
 			<div class="card-body">
 			  <a href="/comic/info/{{infolist.id}}" >{{infolist.title}}</a>
-              <h5 class="card-title" id="title">{{infolist.title}}</h5>
+              <h5 class="card-title" id="title">{{infolist.title}}</h5>			  
 			  {% if infolist.content %}
               <p class="card-text" id="content">{{infolist.content}}</p>
 			  {% endif %}
 			  {% if infolist.price %}
-			  <p class="card-text">價格:<span id="price">{{infolist.price}}</span></p>
+			  <p class="card-text">價格:<span id="price" class="price" value="{{infolist.price}}">{{infolist.price}}</span></p>
+			  <button class="btn btn-outline-success my-sm-0" id="addCar1" name="{{infolist.id}}" onclick="addItem()">Test加入購物車</button>
+			  <button class="btn btn-outline-success my-sm-0" id="addCar" name="{{infolist.id}}">ajax加入購物車</button>
 			  <form action="/showinfo/article/" method="POST" name="form">
 			  {% csrf_token %}
-			  <input type="hidden" name="title" value="酸菜"></input>
-			  <input type="hidden" name="price" value="180"></input>
-			  <button class="btn btn-outline-success my-sm-0" id="addCar1" name="submit">加入購物車</button>
+			  <!--<input type="hidden" name="title" value="酸菜"></input>-->
+			  <!--<input type="hidden" name="price" value="180"></input>-->
+			  <input type="hidden" name="title" value="{{infolist.title}}"></input>
+			  <input type="hidden" name="price" value="{{infolist.price}}"></input>	
+			  <button class="btn btn-outline-success my-sm-0" id="addCar" name="submit" >form加入購物車</button>	  
 			  </form>
 			  {% endif %}			  
 			</div>

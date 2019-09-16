@@ -20,10 +20,18 @@ from func1 import views
 # from func1.views import hello_view
 # from func1.views import listone
 # from restaurants.views import menu, list_restaurants
+from testPassValue.views import HomeView
+from django.conf.urls import include,url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^home/', HomeView.as_view(), name="home"), #path('home/', HomeView.as_view(), name="home"), #path('home/', include('testPassValue.urls', namespace="home")),
     path('', views.testindex),
+    path('formTest', views.formTest),
+    path('ajaxSample', views.ajaxSample),
+    path('teststore', views.teststore),
+    path('carAjax', views.carAjax),
+    path('addCar', views.addCar),
     path('index', LoginView.as_view(template_name='index.html'), name="index"),
     path('login', LoginView.as_view(template_name='login.html'), name="login"),
     path('logout/', views.logout_view, name='logout'),

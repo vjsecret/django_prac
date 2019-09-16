@@ -83,6 +83,47 @@ class Entry(models.Model):
     def __str__(self):
         return self.text
 
+# class User(models.Model):
+#     uname = models.CharField(max_length=20)
+#     upwd = models.CharField(max_length=40)
+#     uemil = models.CharField(max_length=30)
+#     urelname =models.CharField(max_length=20,default='')
+#     uadr = models.CharField(max_length=100,default='')
+#     uphone = models.CharField(max_length=11,default='')
+
+#这部分主要是，添加一个商品类和分类类，在首页根据分类来列出一些商品，而列出的顺序可以是，时间顺序，点击量，或是价格排序
+# class TypeInfo(models.Model):
+#     ttitle = models.CharField(max_length=20)
+#     isDelete = models.BooleanField(default=False) #使用逻辑删除
+#     def __str__(self): #这里是 在admin显示的内容
+#         return self.ttitle
+# class GoodInfo(models.Model):
+#     gtitle = models.CharField(max_length=50)
+#     gpic = models.ImageField(upload_to='df_goods') #这个其实存的是路劲，admin中添加时同时上传了文件，需要pillow
+#     gprice = models.DecimalField(max_digits=5, decimal_places=2)
+#     isDelete = models.BooleanField(default=False)
+#     gunit = models.CharField(max_length=20,default='500g')
+#     gclick = models.IntegerField()#点击量
+#     gintro = models.CharField(max_length=100)#简介
+#     gdetial = HTMLField()
+#     gtype = models.ForeignKey("TypeInfo") #外键
+#     gkucun = models.IntegerField(default=0)  # 库存
+# 
+# 
+#     # gadv = models.BooleanField(default=False)#推荐 广告商品
+#     def __str__(self):
+#         return self.gtitle
+#     class Meta(object):
+#         db_table = "goodinfo"
+
+# class Cart(models.Model):
+#     user = models.ForeignKey('df_user.User')
+#     goods = models.ForeignKey('df_goods.GoodInfo')
+#     class Meta(object):
+#         db_table = "cart"
+
+    
+#admin.site.register(Cart)
 admin.site.register(Music)
 admin.site.register(Restaurant)
 admin.site.register(Food)

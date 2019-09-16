@@ -1,22 +1,56 @@
 // JavaScript Document
 (function(){ //立即匿名
+//function addItem(){
 const addCar=document.getElementById('addCar');
+//addCar.bind("click",function(){
 addCar.addEventListener('click',function(){
-	
-									const title=document.getElementById('title');
-									const price=document.getElementById('price');
-									console.log(title.innerHTML);
-									console.log(price.innerHTML);
-									//title.val()=title.innerHTML;
-									//price.val()=price.innerHTML;									
-									console.log(title.value);
-									console.log(price.value);
-									//$.ajax({method:"POST",data:{title: title.innerHTML,price: price.innerHTML}}).done(function(msg)){alert("Data save"+ msg);};
-									$("#addCar" ).submit();
-									alert("Handler for .submit() called.");
-									//$( "#addCar" ).submit(function( event ) {  alert( "Handler for .submit() called." );
-									//event.preventDefault();});								
-							});
+									console.log(this.name);
+									const it=this.name;
+									const t1 = document.getElementsByClassName("card-title")[it].innerHTML;
+									console.log(t1)
+									//var b = document.getElementById("content").getElementsByClassName("price")[it].value;
+									var b = document.getElementsByClassName("price")[it].innerHTML;
+									console.log(b);
+									console.log(b.value);
+									const a="price";	
+									items = {};
+									items["title"]=t1;
+									items[a]=b;
+									//items["price"]="180";
+									console.log(items);
+									
+									//const title=document.getElementById('title');
+									//const price=document.getElementById('price');
+									//console.log(title.innerHTML);
+									//console.log(price.innerHTML);
+									////title.val()=title.innerHTML;
+									////price.val()=price.innerHTML;									
+									//console.log(title.value);
+									//console.log(price.value);
+									////$.ajax({method:"POST",data:{title: title.innerHTML,price: price.innerHTML}}).done(function(msg)){alert("Data save"+ msg);};
+									//$("#addCar").submit();
+									//alert("Handler for .submit() called.");
+									////$( "#addCar" ).submit(function( event ) {  alert( "Handler for .submit() called." );
+									////event.preventDefault();});
+
+									$.ajax({
+									url: '/addCar',
+									type: 'POST',
+									data: items,
+									dataType: 'json',
+									timeout: 100,									
+									success: function(result) {
+									//console.log(result.result);
+									if ( result.result == "post_success" ) {
+										//$("#ntfText").html("發起成功");
+										$("#ntfText").html(result.result);
+										}else {
+										$("#ntfText").html("重複發起了");
+											}
+										}
+									});
+								
+							});//end of addCar.addEventListener
 
 const content=document.getElementById('content');
 /*
@@ -78,4 +112,6 @@ const content=document.getElementById('content');
 												})//子項 
 									  $("p").append("本次購物總金額:"+total);
 									  console.log(total);*/
+//}// end of addItem();
+
 }());
